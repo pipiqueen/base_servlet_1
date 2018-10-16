@@ -1,11 +1,13 @@
 package com.utn.model;
 
+import java.util.ArrayList;
+
 public interface PersonaDAO {
 
 	
 	public int crearPersona (Persona persona);
 	
-	public int verPersona (); 
+	public Persona verPersona (Persona people); 
 	
-	public int borrarPersona();
+	public ArrayList<Persona> verTodasLasPersonas();
 }

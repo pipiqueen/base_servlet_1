@@ -1,6 +1,7 @@
 package com.utn.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -44,7 +45,14 @@ public class PruebaServlet extends HttpServlet {
 		
 		PersonaDAO personaDAO = new PersonaDAOFactory().createPersonaDAO();
 		personaDAO.crearPersona(people);
-		request.setAttribute("magio", people);
+		
+	
+		
+		
+		ArrayList<Persona> personas2 = personaDAO.verTodasLasPersonas();
+		
+		
+		request.setAttribute("magio", personas2);
 		rd.forward(request, response);
 	}
 
