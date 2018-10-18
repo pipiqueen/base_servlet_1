@@ -4,14 +4,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>La suma total</title>
+<title></title>
 </head>
 <body>
-<% String valor = (String)request.getParameter("parametro"); %>
-
-<h1>La suma total es de <%=valor %></h1>
-
-<a href= "index0.jsp"> al login de nuevo</a>
+<%session.invalidate(); %>
+sesion invalida
+<a href = "index0.jsp"> volve al login</a> 
 </body>
-
 </html>

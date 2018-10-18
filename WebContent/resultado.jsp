@@ -7,6 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Resultado</title>
+ <link rel="stylesheet" type="text/css" href="Estilo.css">
 </head>
 <body>
 	<c:if test="${not empty magio}">
