@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.utn.model.Persona;
 import com.utn.model.PersonaDAO;
@@ -20,13 +21,6 @@ public class PersonaDAOBJDBCImpl implements PersonaDAO {
 	@Override
 	public int crearPersona(Persona people) {
 		
-			
-		
-		
-		con = null; 
-		stmt2 = null;
-		stmt = null;
-		rs = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			String url = "jdbc:mysql://localhost:3306/magio?useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
@@ -66,16 +60,76 @@ public class PersonaDAOBJDBCImpl implements PersonaDAO {
 	
 	
 	@Override
-	public int verPersona() {
-		// TODO Auto-generated method stub
-		return 0;
+	public Persona verPersona(Persona people) {
+		
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			String url = "jdbc:mysql://localhost:3306/magio?useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+			con = DriverManager.getConnection(url, "root", "asd123");
+			stmt2 = con.prepareStatement("SELECT * FROM persona WHERE DNI = ?");
+		stmt2.setLong(1, people.getDni());
+		rs = stmt2.executeQuery();
+		
+		if(rs.next()) {
+			people.setApellido(rs.getString("Apellido"));
+			people.setDni(rs.getInt("DNI"));
+			people.setNombre(rs.getString("Nombre"));
+			
+			return people;
+		}else {
+			
+			return null;
+		}
+		
+		}catch (SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		
+		} finally {
+ 			try {
+ 				stmt.close();
+ 				con.close();
+ 			} catch (SQLException e) {
+ 				e.printStackTrace();
+ 			}
+ 		}
+		
+		return people;
 	}
 	
-	
 	@Override
-	public int borrarPersona() {
-		// TODO Auto-generated method stub
-		return 0;
+	public ArrayList<Persona> verTodasLasPersonas() {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			String url = "jdbc:mysql://localhost:3306/magio?useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+			con = DriverManager.getConnection(url, "root", "asd123");
+			stmt2 = con.prepareStatement("SELECT * FROM persona");
+			rs = stmt2.executeQuery();
+			ArrayList <Persona> personas = new ArrayList <Persona>();
+			while(rs.next()) {
+				Persona people = new Persona();
+				people.setApellido(rs.getString("Apellido"));
+				people.setNombre(rs.getString("Nombre"));
+				people.setDni(rs.getInt("DNI"));
+				personas.add(people);
+							
+			}
+			return personas;
+		
+		}catch (SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		
+		} finally {
+ 			try {
+ 				stmt.close();
+ 				con.close();
+ 			} catch (SQLException e) {
+ 				e.printStackTrace();
+ 			}
+ 		}
+		return null;
+		
+		
+	}
 	} 
 	
-}
+
